@@ -1,8 +1,6 @@
 import { useState } from "react"
 import moment from "moment"
-import { create } from "zustand"
 import "./App.css"
-// import Nav from "./components/Nav"
 
 
 function convertScheduleString(inputString) {
@@ -23,7 +21,8 @@ function convertScheduleString(inputString) {
   }
 
   // If the input string doesn't match the expected format
-  return "Invalid input format.";
+  // console.log(inputString)
+  return "Invalid input format."
 }
 
 
@@ -54,6 +53,7 @@ function App() {
 
   const processScheduleData = () => {
     const formattedEntries = {}
+    // console.log(overlappedEntries)
 
     for (let i = 0; i < numCourses; i++) {
       const entries = scheduleEntries[i].split("\n")
@@ -61,11 +61,9 @@ function App() {
       for (let j = 0; j < entries.length; j++) {
         const entry = entries[j].trim()
 
-        
-
         if (entry !== "") {
           const formattedEntry = convertScheduleString(entry)
-          console.log(formattedEntry)
+          // console.log(formattedEntry)
 
           const match = formattedEntry.match(
             /Date: (.*?) ; Time: (.*?) ; Place: (.*?)/
@@ -76,6 +74,7 @@ function App() {
             const time = match[2].split(" - ")
             const startTime = moment(time[0], "HH:mm:ss")
             const endTime = moment(time[1], "HH:mm:ss")
+            const number = j + 1
 
             if (!formattedEntries[date]) {
               formattedEntries[date] = []
@@ -88,6 +87,7 @@ function App() {
               startTime,
               endTime,
               place: match[3],
+              entryNum: number,
             })
           }
         }
@@ -105,7 +105,7 @@ function App() {
         for (let j = i + 1; j < entries.length; j++) {
           const entryB = entries[j]
 
-          console.log(entryA, entryB)
+          // console.log(entryA, entryB)
 
           if (
             entryA.startTime.isBetween(entryB.startTime, entryB.endTime, undefined, "[)") ||
@@ -113,7 +113,7 @@ function App() {
             entryB.startTime.isBetween(entryA.startTime, entryA.endTime, undefined, "[)") ||
             entryB.endTime.isBetween(entryA.startTime, entryA.endTime, undefined, "(]")
           ) {
-            overlappingEntries.push(entryA, entryB)
+            overlappingEntries.push([entryA, entryB])
           }
         }
       }
@@ -146,15 +146,14 @@ function App() {
 
         {courseNames.map((courseName, index) => (
           <div key={index} className="mb-5 grid grid-flow-row gap-2">
-            {/* <div key={index}> */}
             <div className="grid grid-flow-col grid-cols-display">
               <label className="text-left align-middle">Course Name {index + 1}:</label>
-              <input type="text" value={courseName} onChange={(event) => handleCourseNameChange(index, event)} />
+              <input className="rounded-xl px-3 py-2 align-middle" type="text" value={courseName} onChange={(event) => handleCourseNameChange(index, event)} />
             </div>
 
             <div className="grid grid-flow-col grid-cols-display">
               <label className="text-left align-middle">Schedule Entries {index + 1}:</label>
-              <textarea value={scheduleEntries[index]} rows={5} onChange={(event) => handleScheduleEntryChange(index, event)} />
+              <textarea className="rounded-xl px-3 py-2 align-middle" value={scheduleEntries[index]} rows={5} onChange={(event) => handleScheduleEntryChange(index, event)} />
             </div>
           </div>
         ))}
@@ -166,6 +165,38 @@ function App() {
 
       <div className="grid grid-flow-row gap-1">
         <h3 className="text-2xl">Overlapping Entries</h3>
+
+        {/* Table Layout */}
+        <table className="table-auto border-collapse mt-6">
+          <thead>
+            <tr className="bg-blue-800">
+              <th className="border border-slate-600 py-4 text-xl">Item</th>
+              <th className="border border-slate-600 py-4 text-xl">Entries</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {
+              overlappedEntries.map((entry, index) => {
+                return (
+                  <>
+                    <tr>
+                      <td className="border border-slate-600 text-lg font-bold" rowSpan={2}>{index + 1}</td>
+                      <td className="border border-slate-600 py-2">Entry {entry[0].entryNum} :: {entry[0].course} :: {entry[0].date} :: {entry[0].time}</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-slate-600 py-2">Entry {entry[1].entryNum} :: {entry[1].course} :: {entry[1].date} :: {entry[1].time}</td>
+                    </tr>
+                  </>
+                )
+              })
+            }
+          </tbody>
+        </table>
+
+
+        {/* Original List Layout */}
+        {/* 
         <ul className="">
           {overlappedEntries.map((entry, index) => {
             return (
@@ -175,6 +206,7 @@ function App() {
             )
           })}
         </ul>
+        */}
       </div>
     </div>
   )

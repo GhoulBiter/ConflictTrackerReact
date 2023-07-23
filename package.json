@@ -2,7 +2,7 @@
   "name": "conflicttracker",
   "private": true,
   "version": "1.0.0",
-  "homepage": "https://mikehanna.dev/sites/conflict-checker",
+  "homepage": "https://gutech-conflict-tracker.vercel.app/",
   "type": "module",
   "scripts": {
     "dev": "vite",

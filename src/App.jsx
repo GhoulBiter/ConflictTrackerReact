@@ -127,14 +127,14 @@ function App() {
   }
 
   return (
-    <div className="flex flex-col gap-6 text-center py-8 md:px-12">
+    <div className="flex flex-col gap-6 text-center py-8 px-6 md:px-12 lg:px-40">
       <h2 className="text-4xl text-blue-600 font-semibold">
         Conflict Identifier
       </h2>
 
-      <div className="container grid">
-        <div className="mb-5 grid grid-flow-row md:grid-flow-col grid-cols-display">
-          <label htmlFor="numCourses" className="text-left">
+      <div className="grid">
+        <div className="mb-5 grid grid-flow-row grid-rows-display sm:grid-flow-col sm:grid-cols-display">
+          <label htmlFor="numCourses" className="text-left align-middle mb-2 sm:mb-0">
             Number of Courses:
           </label>
           <select id="numCourses" className="rounded-xl px-3 py-2 align-middle" onChange={handleNumCoursesChange}>
@@ -150,13 +150,13 @@ function App() {
 
         {courseNames.map((courseName, index) => (
           <div key={index} className="mb-5 grid grid-flow-row gap-2">
-            <div className="grid grid-flow-col grid-cols-display">
-              <label className="text-left align-middle">Course Name {index + 1}:</label>
+            <div className="grid grid-flow-row grid-rows-display sm:grid-flow-col sm:grid-cols-display">
+              <label className="flex items-center mb-2 sm:mb-0">Course Name {index + 1}:</label>
               <input className="rounded-xl px-3 py-2 align-middle" type="text" value={courseName} onChange={(event) => handleCourseNameChange(index, event)} required />
             </div>
 
-            <div className="grid grid-flow-col grid-cols-display">
-              <label className="text-left align-middle">Schedule Entries {index + 1}:</label>
+            <div className="grid grid-flow-row grid-rows-display sm:grid-flow-col sm:grid-cols-display">
+              <label className="text-left align-middle mb-2 sm:mb-0">Schedule Entries {index + 1}:</label>
               <textarea className="rounded-xl px-3 py-2 align-middle" value={scheduleEntries[index]} rows={5} onChange={(event) => handleScheduleEntryChange(index, event)} required />
             </div>
           </div>
@@ -165,7 +165,7 @@ function App() {
         <button onClick={processScheduleData}>Process Schedule Data</button>
       </div>
 
-      <div className="lg:border-2 border-blue-800"></div>
+      <div className="border-2 border-blue-800"></div>
 
       <div className="grid grid-flow-row gap-1">
         {/* <h3 className="text-2xl">Overlapping Entries</h3> */}

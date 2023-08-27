@@ -8,6 +8,9 @@ export default {
     extend: {
       gridTemplateColumns: {
         'display': '1.5fr 3.5fr',
+      },
+      gridTemplateRows: {
+        'display': 'fit fit',
       }
     },
   },

@@ -28,4 +28,4 @@ dist-ssr
 
 
 # customs
-components/ConflictTable.jsx
+src/components/ConflictTable.jsx

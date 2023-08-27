@@ -1,6 +1,7 @@
 import { useState } from "react"
 import moment from "moment"
 import "./App.css"
+import ConflictTable from "./components/ConflictTable";
 
 
 function convertScheduleString(inputString) {
@@ -120,6 +121,7 @@ function App() {
     }
 
     setOverlappedEntries(overlappingEntries)
+    console.log(overlappingEntries)
   }
 
   return (
@@ -148,12 +150,12 @@ function App() {
           <div key={index} className="mb-5 grid grid-flow-row gap-2">
             <div className="grid grid-flow-col grid-cols-display">
               <label className="text-left align-middle">Course Name {index + 1}:</label>
-              <input className="rounded-xl px-3 py-2 align-middle" type="text" value={courseName} onChange={(event) => handleCourseNameChange(index, event)} />
+              <input className="rounded-xl px-3 py-2 align-middle" type="text" value={courseName} onChange={(event) => handleCourseNameChange(index, event)} required />
             </div>
 
             <div className="grid grid-flow-col grid-cols-display">
               <label className="text-left align-middle">Schedule Entries {index + 1}:</label>
-              <textarea className="rounded-xl px-3 py-2 align-middle" value={scheduleEntries[index]} rows={5} onChange={(event) => handleScheduleEntryChange(index, event)} />
+              <textarea className="rounded-xl px-3 py-2 align-middle" value={scheduleEntries[index]} rows={5} onChange={(event) => handleScheduleEntryChange(index, event)} required />
             </div>
           </div>
         ))}
@@ -167,7 +169,49 @@ function App() {
         <h3 className="text-2xl">Overlapping Entries</h3>
 
         {/* Table Layout */}
+        {/* <ConflictTable overlappedEntries={overlappedEntries} numCourses={numCourses}></ConflictTable> */}
+        
+        {overlappedEntries.length > 0 && (
         <table className="table-auto border-collapse mt-6">
+          <thead>
+            <tr className="bg-blue-800">
+              <th className="border border-slate-600 py-4 text-xl">Item</th>
+              <th className="border border-slate-600 py-4 text-xl">Entries</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {
+              overlappedEntries.map((entry, index) => {
+                // console.log(entry)
+                return (
+                  <>
+                    <tr>
+                      <td className="border border-slate-600 text-lg font-bold" rowSpan={entry.length}>{index + 1}</td>
+                      <td className="border border-slate-600 py-2">Entry {entry[0].entryNum} :: {entry[0].course} :: {entry[0].date} :: {entry[0].time}</td>
+                    </tr>
+
+                    {entry.slice(2).map((subEntry, subIndex) => (
+                      <tr>
+                        <td className="border border-slate-600 py-2" key={`${index}-${subIndex}`}>
+                          Entry {subEntry.entryNum} :: {subEntry.course} :: {subEntry.date} :: {subEntry.time}
+                        </td>
+                      </tr>
+                    ))}
+
+                    <tr>
+                      <td className="border border-slate-600 py-2">Entry {entry[1].entryNum} :: {entry[1].course} :: {entry[1].date} :: {entry[1].time}</td>
+                    </tr>
+                  </>
+                )
+              })
+            }
+          </tbody>
+        </table>
+        )}
+
+        {/* Original Table View */}
+        {/* <table className="table-auto border-collapse mt-6">
           <thead>
             <tr className="bg-blue-800">
               <th className="border border-slate-600 py-4 text-xl">Item</th>
@@ -181,9 +225,10 @@ function App() {
                 return (
                   <>
                     <tr>
-                      <td className="border border-slate-600 text-lg font-bold" rowSpan={2}>{index + 1}</td>
+                      <td className="border border-slate-600 text-lg font-bold" rowSpan={numCourses}>{index + 1}</td>
                       <td className="border border-slate-600 py-2">Entry {entry[0].entryNum} :: {entry[0].course} :: {entry[0].date} :: {entry[0].time}</td>
                     </tr>
+
                     <tr>
                       <td className="border border-slate-600 py-2">Entry {entry[1].entryNum} :: {entry[1].course} :: {entry[1].date} :: {entry[1].time}</td>
                     </tr>
@@ -192,8 +237,8 @@ function App() {
               })
             }
           </tbody>
-        </table>
-
+        </table> */}
+        
 
         {/* Original List Layout */}
         {/* 

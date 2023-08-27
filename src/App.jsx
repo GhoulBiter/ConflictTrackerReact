@@ -97,6 +97,8 @@ function App() {
 
     const overlappingEntries = []
 
+    console.log(formattedEntries)
+
     for (const date in formattedEntries) {
       const entries = formattedEntries[date]
 
@@ -166,49 +168,52 @@ function App() {
       <div className="lg:border-2 border-blue-800"></div>
 
       <div className="grid grid-flow-row gap-1">
-        <h3 className="text-2xl">Overlapping Entries</h3>
+        {/* <h3 className="text-2xl">Overlapping Entries</h3> */}
 
         {/* Table Layout */}
         {/* <ConflictTable overlappedEntries={overlappedEntries} numCourses={numCourses}></ConflictTable> */}
         
         {overlappedEntries.length > 0 && (
-        <table className="table-auto border-collapse mt-6">
-          <thead>
-            <tr className="bg-blue-800">
-              <th className="border border-slate-600 py-4 text-xl">Item</th>
-              <th className="border border-slate-600 py-4 text-xl">Entries</th>
-            </tr>
-          </thead>
+        <>
+          <h3 className="text-2xl">Overlapping Entries</h3>
 
-          <tbody>
-            {
-              overlappedEntries.map((entry, index) => {
-                // console.log(entry)
-                return (
-                  <>
-                    <tr>
-                      <td className="border border-slate-600 text-lg font-bold" rowSpan={entry.length}>{index + 1}</td>
-                      <td className="border border-slate-600 py-2">Entry {entry[0].entryNum} :: {entry[0].course} :: {entry[0].date} :: {entry[0].time}</td>
-                    </tr>
+          <table className="table-auto border-collapse mt-6">
+            <thead>
+              <tr className="bg-blue-800">
+                <th className="border border-slate-600 py-4 text-xl">Item</th>
+                <th className="border border-slate-600 py-4 text-xl">Entries</th>
+              </tr>
+            </thead>
 
-                    {entry.slice(2).map((subEntry, subIndex) => (
+            <tbody>
+              {
+                overlappedEntries.map((entry, index) => {
+                  // console.log(entry)
+                  return (
+                    <>
                       <tr>
-                        <td className="border border-slate-600 py-2" key={`${index}-${subIndex}`}>
-                          Entry {subEntry.entryNum} :: {subEntry.course} :: {subEntry.date} :: {subEntry.time}
-                        </td>
+                        <td className="border border-slate-600 text-lg font-bold" rowSpan={entry.length}>{index + 1}</td>
+                        <td className="border border-slate-600 py-2">Entry {entry[0].entryNum} :: {entry[0].course} :: {entry[0].date} :: {entry[0].time}</td>
                       </tr>
-                    ))}
 
-                    <tr>
-                      <td className="border border-slate-600 py-2">Entry {entry[1].entryNum} :: {entry[1].course} :: {entry[1].date} :: {entry[1].time}</td>
-                    </tr>
-                  </>
-                )
-              })
-            }
-          </tbody>
-        </table>
-        )}
+                      {entry.slice(2).map((subEntry, subIndex) => (
+                        <tr>
+                          <td className="border border-slate-600 py-2" key={`${index}-${subIndex}`}>
+                            Entry {subEntry.entryNum} :: {subEntry.course} :: {subEntry.date} :: {subEntry.time}
+                          </td>
+                        </tr>
+                      ))}
+
+                      <tr>
+                        <td className="border border-slate-600 py-2">Entry {entry[1].entryNum} :: {entry[1].course} :: {entry[1].date} :: {entry[1].time}</td>
+                      </tr>
+                    </>
+                  )
+                })
+              }
+            </tbody>
+          </table>
+        </>)}
 
         {/* Original Table View */}
         {/* <table className="table-auto border-collapse mt-6">

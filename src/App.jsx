@@ -2,6 +2,7 @@ import { useState } from "react"
 import moment from "moment"
 import "./App.css"
 import GoogleAdsenseComponent from "./components/GoogleAdsense";
+import { Analytics } from '@vercel/analytics/react';
 
 function convertScheduleString(inputString) {
   // Extracting the necessary information using regular expressions
@@ -214,6 +215,9 @@ function App() {
           </table>
         </>)}
       </div>
+
+
+      <Analytics />
     </div>
   )
 }

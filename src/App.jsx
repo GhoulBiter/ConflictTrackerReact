@@ -167,7 +167,7 @@ function App() {
       <div className="border-2 border-blue-800"></div>
 
       <div>
-        <GoogleAdsenseComponent />
+        <GoogleAdsenseComponent dataAdSlot="7133449289" />
       </div>
 
       <div className="border-2 border-blue-800"></div>

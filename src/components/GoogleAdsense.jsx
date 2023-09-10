@@ -14,8 +14,8 @@ const GoogleAdsenseComponent = (props) => {
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}
-        data-ad-client={import.meta.env.ADSENSE_CLIENT}
-        data-ad-slot={import.meta.env.ADSENSE_ID}
+        data-ad-client="ca-pub-3117685529439172"
+        data-ad-slot={dataAdSlot}
         data-ad-format="auto"
         data-full-width-responsive="true"></ins>
     </>

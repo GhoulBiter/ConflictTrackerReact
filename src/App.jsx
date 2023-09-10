@@ -1,6 +1,7 @@
 import { useState } from "react"
 import moment from "moment"
 import "./App.css"
+import GoogleAdsenseComponent from "./components/GoogleAdsense";
 
 function convertScheduleString(inputString) {
   // Extracting the necessary information using regular expressions
@@ -161,6 +162,12 @@ function App() {
         ))}
 
         <button onClick={processScheduleData}>Process Schedule Data</button>
+      </div>
+
+      <div className="border-2 border-blue-800"></div>
+
+      <div>
+        <GoogleAdsenseComponent />
       </div>
 
       <div className="border-2 border-blue-800"></div>
